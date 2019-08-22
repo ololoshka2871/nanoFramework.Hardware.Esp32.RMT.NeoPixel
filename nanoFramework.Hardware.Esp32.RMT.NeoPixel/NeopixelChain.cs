@@ -120,7 +120,7 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 			Rmt_tx.CarierEnabled = false;
 			Rmt_tx.ClockDivider = CLOCK_DEVIDER;
 			Rmt_tx.isSource80MHz = true;
-			Rmt_tx.TransmitIdleLevel = true;
+			Rmt_tx.TransmitIdleLevel = false;
 			Rmt_tx.IsTransmitIdleEnabled = true;
 		}
 
