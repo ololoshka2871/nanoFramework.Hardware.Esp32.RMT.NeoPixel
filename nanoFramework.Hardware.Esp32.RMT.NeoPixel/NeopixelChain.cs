@@ -7,17 +7,20 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 	{
 		#region Fields
 
-		// 80MHz / 4 => min pulse 0.05us
-		protected const byte CLOCK_DEVIDER = 4;
-
-		protected const float min_pulse = 0.05f;
+		// 80MHz / 4 => min pulse 0.00us
+		protected const byte CLOCK_DEVIDER = 2;
+		// one pulse duration in us
+		protected const float min_pulse = 1000000.0f / (80000000 / CLOCK_DEVIDER);
 
 		// default datasheet values
-		protected static readonly PulseCommand onePulse =
+		protected readonly PulseCommand onePulse =
 			new PulseCommand((ushort)(0.7 / min_pulse), true, (ushort)(0.6 / min_pulse), false);
 
-		protected static readonly PulseCommand zeroPulse =
+		protected readonly PulseCommand zeroPulse =
 			new PulseCommand((ushort)(0.35 / min_pulse), true, (ushort)(0.8 / min_pulse), false);
+
+		protected readonly PulseCommand RETCommand =
+			new PulseCommand((ushort)(25 / min_pulse), false, (ushort)(26 / min_pulse), false);
 
 		protected Color[] pixels;
 		protected Transmitter Rmt_tx;
@@ -99,6 +102,7 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 				if (Is4BytesPrePixel)
 					SerialiseColor(pixels[pixel].W, commandlist);
 			}
+			commandlist.AddCommand(RETCommand); // RET
 			Rmt_tx.Send(commandlist);
 		}
 
