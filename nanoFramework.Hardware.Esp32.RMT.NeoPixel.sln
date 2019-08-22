@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.Hardware.Esp32.RMT.NeoPixel", "nanoFramework.Hardware.Esp32.RMT.NeoPixel\nanoFramework.Hardware.Esp32.RMT.NeoPixel.nfproj", "{32D49BFD-B60E-422F-9943-A0E8D4AB3D74}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.Hardware.Esp32.RMT", "nanoFramework.Hardware.Esp32.RMT\nanoFramework.Hardware.Esp32.RMT\nanoFramework.Hardware.Esp32.RMT.nfproj", "{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,12 @@ Global
 		{32D49BFD-B60E-422F-9943-A0E8D4AB3D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D49BFD-B60E-422F-9943-A0E8D4AB3D74}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32D49BFD-B60E-422F-9943-A0E8D4AB3D74}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{812A3CFF-47E0-4B02-8B0A-5F3796EB2ABC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

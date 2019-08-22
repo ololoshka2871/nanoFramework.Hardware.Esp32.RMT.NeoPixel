@@ -259,3 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# generated stubs
+nanoFramework.Hardware.Esp32.RMT/Stubs

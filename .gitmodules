@@ -1,0 +1,3 @@
+[submodule "nanoFramework.Hardware.Esp32.RMT"]
+	path = nanoFramework.Hardware.Esp32.RMT
+	url = https://github.com/ololoshka2871/nanoFramework.Hardware.Esp32.RMT.git
