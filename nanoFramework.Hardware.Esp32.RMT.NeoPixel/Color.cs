@@ -4,12 +4,11 @@
 	{
 		#region Fields
 
-		const int HUE_DEGREE = 512;
-
 		public byte B;
 		public byte G;
 		public byte R;
 		public byte W = 0;
+		private const int HUE_DEGREE = 512;
 
 		#endregion Fields
 
@@ -19,6 +18,16 @@
 		{
 			HSV2RGB(H, S, V, out byte R, out byte G, out byte B);
 			return new Color() { R = R, G = G, B = B };
+		}
+
+		public Color Apply(Color newcolor)
+		{
+			R = newcolor.R;
+			G = newcolor.G;
+			B = newcolor.B;
+			W = newcolor.W;
+
+			return this;
 		}
 
 		public Color SetHSV(int H, int S, int V)
@@ -53,11 +62,13 @@
 							G = (byte)V;
 							B = (byte)p;
 							break;
+
 						case 3:
 							R = (byte)p;
 							G = (byte)q;
 							B = (byte)V;
 							break;
+
 						case 5:
 							R = (byte)V;
 							G = (byte)p;
@@ -75,11 +86,13 @@
 							G = (byte)t;
 							B = (byte)p;
 							break;
+
 						case 2:
 							R = (byte)p;
 							G = (byte)V;
 							B = (byte)t;
 							break;
+
 						case 4:
 							R = (byte)t;
 							G = (byte)p;
