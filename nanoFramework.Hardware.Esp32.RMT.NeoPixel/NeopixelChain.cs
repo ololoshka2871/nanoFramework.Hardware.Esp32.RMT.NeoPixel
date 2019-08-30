@@ -7,7 +7,7 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 	{
 		#region Fields
 
-		// 80MHz / 4 => min pulse 0.00us
+		// 80MHz / 4 => min pulse 0.05us
 		protected const byte CLOCK_DEVIDER = 2;
 		// one pulse duration in us
 		protected const float min_pulse = 1000000.0f / (80000000 / CLOCK_DEVIDER);
@@ -17,27 +17,29 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 			new PulseCommand((ushort)(0.7 / min_pulse), true, (ushort)(0.6 / min_pulse), false);
 
 		protected readonly PulseCommand zeroPulse =
-			new PulseCommand((ushort)(0.35 / min_pulse), true, (ushort)(0.8 / min_pulse), false);
+			new PulseCommand((ushort)(0.3 / min_pulse), true, (ushort)(0.8 / min_pulse), false);
 
 		protected readonly PulseCommand RETCommand =
 			new PulseCommand((ushort)(25 / min_pulse), false, (ushort)(26 / min_pulse), false);
 
-		protected Color[] pixels;
+		protected RGBColor[] pixels;
+		protected PulseCommandList commands;
 		protected Transmitter Rmt_tx;
 
 		#endregion Fields
 
 		#region Constructors
 
-		public NeopixelChain(int gpio_pin, uint size, bool is4BytesPrePixel = false)
+		public NeopixelChain(int gpio_pin, int size)
 		{
 			Rmt_tx = Transmitter.Register(gpio_pin);
 			configureTransmitter();
-			Is4BytesPrePixel = is4BytesPrePixel;
-			pixels = new Color[size];
+			pixels = new RGBColor[size];
+			commands = new PulseCommandList(size * 8 * 3 + 1);
+			commands[size * 8 * 3] = RETCommand;
 			for (uint i = 0; i < size; ++i)
 			{
-				pixels[i] = new Color();
+				pixels[i] = new RGBColor();
 			}
 		}
 
@@ -54,7 +56,6 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 
 		#region Properties
 
-		public bool Is4BytesPrePixel { get; set; }
 		public uint Size { get => (uint)pixels.Length; }
 
 		public float T0H
@@ -93,24 +94,24 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 
 		public void Update()
 		{
-			var commandlist = new PulseCommandList();
-			for(uint pixel = 0; pixel < pixels.Length; ++pixel)
+			int pixel = 0;
+			int color_component = 0;
+			for (; pixel < pixels.Length; color_component += 3, ++pixel)
 			{
-				SerialiseColor(pixels[pixel].G, commandlist);
-				SerialiseColor(pixels[pixel].R, commandlist);
-				SerialiseColor(pixels[pixel].B, commandlist);
-				if (Is4BytesPrePixel)
-					SerialiseColor(pixels[pixel].W, commandlist);
+				var px = pixels[pixel];
+				SerialiseColor((color_component + 0) * 8, px.bG);
+				SerialiseColor((color_component + 1) * 8, px.bR);
+				SerialiseColor((color_component + 2) * 8, px.bB);
 			}
-			commandlist.AddCommand(RETCommand); // RET
-			Rmt_tx.Send(commandlist);
+			Rmt_tx.Send(commands);
 		}
 
-		private void SerialiseColor(byte b, PulseCommandList commandlist)
+		private void SerialiseColor(int index, byte b)
 		{
+			const byte mask = 1 << 7;
 			for (int i = 0; i < 8; ++i)
 			{
-				commandlist.AddCommand(((b & (1u << 7)) != 0) ? onePulse : zeroPulse);
+				commands[index++] = (b & mask) != 0 ? onePulse : zeroPulse;
 				b <<= 1;
 			}
 		}
@@ -120,20 +121,17 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel
 			Rmt_tx.CarierEnabled = false;
 			Rmt_tx.ClockDivider = CLOCK_DEVIDER;
 			Rmt_tx.isSource80MHz = true;
-			Rmt_tx.TransmitIdleLevel = false;
 			Rmt_tx.IsTransmitIdleEnabled = true;
+			Rmt_tx.TransmitIdleLevel = false;
 		}
 
-		protected virtual void Dispose(bool disposing)
-		{
-			Rmt_tx.Dispose();
-		}
+		protected virtual void Dispose(bool disposing) => Rmt_tx.Dispose();
 
 		#endregion Methods
 
 		#region Indexers
 
-		public Color this[uint i]
+		public RGBColor this[int i]
 		{
 			get => pixels[i];
 			set

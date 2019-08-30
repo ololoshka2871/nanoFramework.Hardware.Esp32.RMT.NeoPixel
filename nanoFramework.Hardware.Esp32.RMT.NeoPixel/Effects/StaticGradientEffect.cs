@@ -9,8 +9,8 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel.Effects
 		public const string Color1String = "Color1";
 		public const string Color2String = "Color2";
 
-		public Color Color1 = new Color();
-		public Color Color2 = new Color();
+		public RGBColor Color1 = new RGBColor();
+		public RGBColor Color2 = new RGBColor();
 
 		#endregion Fields
 
@@ -28,11 +28,11 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel.Effects
 				};
 			set
 			{
-				if (value[Color1String] is Color c1)
+				if (value[Color1String] is RGBColor c1)
 				{
 					Color1 = c1;
 				}
-				if (value[Color2String] is Color c2)
+				if (value[Color2String] is RGBColor c2)
 				{
 					Color2 = c2;
 				}
@@ -43,7 +43,7 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel.Effects
 
 		#region Methods
 
-		public void ProcessFrame(uint frame_number, Color[] pixels)
+		public void ProcessFrame(uint frame_number, RGBColor[] pixels)
 		{
 			// TODO
 		}

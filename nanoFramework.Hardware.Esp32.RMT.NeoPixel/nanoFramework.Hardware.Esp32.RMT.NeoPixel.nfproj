@@ -18,9 +18,12 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Color.cs" />
+    <Compile Include="ColorTransform.cs" />
+    <Compile Include="HSVColor.cs" />
+    <Compile Include="RGBColor.cs" />
     <Compile Include="Effects\IColorEffect.cs" />
     <Compile Include="Effects\SolidColorEffect.cs" />
+    <Compile Include="Effects\StaticGradientEffect.cs" />
     <Compile Include="NeopixelChain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -30,6 +33,11 @@
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.2.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.2.6-preview.16\lib\mscorlib.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Math, Version=1.0.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.0.6-preview.18\lib\System.Math.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>

@@ -29,7 +29,7 @@ namespace nanoFramework.Hardware.Esp32.RMT.NeoPixel.Effects
 		/// </summary>
 		/// <param name="frame_number">frame couter value, Effect argument</param>
 		/// <param name="pixels">pixels to accept effect to</param>
-		void ProcessFrame(uint frame_number, Color[] pixels);
+		void ProcessFrame(uint frame_number, RGBColor[] pixels);
 
 		#endregion Methods
 	}
